@@ -32,11 +32,31 @@
 
 .wcpait-style-modern .wcpait-table {
     box-shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+    border-width: 0;
+}
+
+.wcpait-style-modern .wcpait-table th {
+    font-size: calc(var(--wcpait-font-size, 14px) + 1px);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .wcpait-style-classic .wcpait-table th {
     text-transform: uppercase;
     letter-spacing: 0.03em;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.wcpait-style-classic .wcpait-table,
+.wcpait-style-classic .wcpait-table th,
+.wcpait-style-classic .wcpait-table td {
+    border-color: #8b7355;
+}
+
+.wcpait-style-minimal .wcpait-table {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
 }
 
 .wcpait-style-dark {
@@ -50,6 +70,11 @@
 .wcpait-style-compact {
     --wcpait-cell-padding: 8px;
     --wcpait-font-size: 13px;
+}
+
+.wcpait-style-compact .wcpait-table th,
+.wcpait-style-compact .wcpait-table td {
+    line-height: 1.25;
 }
 
 @media (max-width: 767px) {

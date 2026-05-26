@@ -12,6 +12,7 @@ class Assets
     public function enqueue(string $hook): void
     {
         $allowed = ['woocommerce_page_wcpait-settings', 'post.php', 'post-new.php'];
+        $is_settings_page = 'woocommerce_page_wcpait-settings' === $hook;
 
         if (!in_array($hook, $allowed, true)) {
             return;
@@ -23,6 +24,15 @@ class Assets
             [],
             WCPAIT_VERSION
         );
+
+        if ($is_settings_page) {
+            wp_enqueue_style(
+                'wcpait-frontend',
+                WCPAIT_URL . 'assets/css/frontend.css',
+                [],
+                WCPAIT_VERSION
+            );
+        }
 
         wp_enqueue_script(
             'wcpait-admin',
@@ -39,6 +49,13 @@ class Assets
                 'rowTemplate' => $this->field_row_template(),
                 'removeMessage' => __('Remove this row?', 'wc-pait'),
                 'requiredMessage' => __('Label is required.', 'wc-pait'),
+                'isSettingsPage' => $is_settings_page,
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'saveNonce' => wp_create_nonce('wcpait_save_settings_nonce'),
+                'savingText' => __('Saving...', 'wc-pait'),
+                'saveText' => __('Save Settings', 'wc-pait'),
+                'savedText' => __('Settings saved successfully.', 'wc-pait'),
+                'errorText' => __('Unable to save settings. Please review fields and try again.', 'wc-pait'),
             ]
         );
     }

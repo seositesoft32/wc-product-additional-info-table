@@ -11,14 +11,48 @@ if (!defined('ABSPATH')) {
 
 $fields = isset($settings['fields']) && is_array($settings['fields']) ? $settings['fields'] : [];
 $selected_position = isset($settings['display_position']) ? (string) $settings['display_position'] : 'shortcode';
+$table_style = isset($settings['table_style']) ? (string) $settings['table_style'] : 'minimal';
+$header_label_text = isset($settings['header_label_text']) ? (string) $settings['header_label_text'] : __('Label', 'wc-pait');
+$header_value_text = isset($settings['header_value_text']) ? (string) $settings['header_value_text'] : __('Value', 'wc-pait');
+$show_table_header = isset($settings['show_table_header']) ? (string) $settings['show_table_header'] : 'yes';
+$preview_styles = sprintf(
+    '--wcpait-table-bg:%s;--wcpait-header-bg:%s;--wcpait-text:%s;--wcpait-border:%s;--wcpait-alt-row:%s;--wcpait-row-spacing:%dpx;--wcpait-cell-padding:%dpx;--wcpait-font-size:%dpx;--wcpait-radius:%dpx;',
+    esc_attr((string) $settings['table_background']),
+    esc_attr((string) $settings['header_background']),
+    esc_attr((string) $settings['text_color']),
+    esc_attr((string) $settings['border_color']),
+    esc_attr((string) $settings['alternate_row_color']),
+    absint($settings['row_spacing']),
+    absint($settings['cell_padding']),
+    absint($settings['font_size']),
+    absint($settings['border_radius'])
+);
 ?>
 <div class="wrap wcpait-admin-wrap">
-    <h1><?php esc_html_e('WC Product Additional Info Table', 'wc-pait'); ?></h1>
-    <p class="description"><?php esc_html_e('Create reusable additional information fields and control frontend display.', 'wc-pait'); ?></p>
+    <div class="wcpait-settings-header">
+        <div>
+            <h1><?php esc_html_e('WC Product Additional Info Table', 'wc-pait'); ?></h1>
+            <p class="description"><?php esc_html_e('Create reusable additional information fields and control frontend display.', 'wc-pait'); ?></p>
+        </div>
+        <div>
+            <button type="submit" form="wcpait-settings-form" class="button button-primary" id="wcpait-save-settings-btn"><?php esc_html_e('Save Settings', 'wc-pait'); ?></button>
+        </div>
+    </div>
+
+    <div id="wcpait-admin-notice" class="wcpait-admin-notice" style="display:none;"></div>
 
     <form action="options.php" method="post" id="wcpait-settings-form">
         <?php settings_fields('wcpait_settings_group'); ?>
+        <?php wp_nonce_field('wcpait_save_settings_nonce', 'wcpait_save_settings_nonce'); ?>
 
+        <div class="wcpait-settings-tabs" role="tablist" aria-label="<?php esc_attr_e('Settings tabs', 'wc-pait'); ?>">
+            <button type="button" class="button-link wcpait-tab is-active" data-tab="fields"><?php esc_html_e('Fields', 'wc-pait'); ?></button>
+            <button type="button" class="button-link wcpait-tab" data-tab="display"><?php esc_html_e('Display', 'wc-pait'); ?></button>
+            <button type="button" class="button-link wcpait-tab" data-tab="style"><?php esc_html_e('Style', 'wc-pait'); ?></button>
+            <button type="button" class="button-link wcpait-tab" data-tab="advanced"><?php esc_html_e('Advanced', 'wc-pait'); ?></button>
+        </div>
+
+        <div class="wcpait-tab-panel is-active" data-panel="fields">
         <div class="wcpait-admin-card">
             <h2><?php esc_html_e('Additional Information Fields', 'wc-pait'); ?></h2>
             <p><?php esc_html_e('Drag to reorder fields. Label is required.', 'wc-pait'); ?></p>
@@ -60,7 +94,9 @@ $selected_position = isset($settings['display_position']) ? (string) $settings['
                 <button type="button" class="button button-secondary" id="wcpait-add-row"><?php esc_html_e('Add New Row', 'wc-pait'); ?></button>
             </p>
         </div>
+        </div>
 
+        <div class="wcpait-tab-panel" data-panel="display">
         <div class="wcpait-admin-grid">
             <div class="wcpait-admin-card">
                 <h2><?php esc_html_e('Display Positions', 'wc-pait'); ?></h2>
@@ -77,11 +113,33 @@ $selected_position = isset($settings['display_position']) ? (string) $settings['
             </div>
 
             <div class="wcpait-admin-card">
+                <h2><?php esc_html_e('Header Row', 'wc-pait'); ?></h2>
+                <p>
+                    <label>
+                        <input type="checkbox" name="wcpait_settings[show_table_header]" value="yes" <?php checked($show_table_header, 'yes'); ?> />
+                        <?php esc_html_e('Show table header on frontend', 'wc-pait'); ?>
+                    </label>
+                </p>
+                <p>
+                    <label for="wcpait_header_label_text"><?php esc_html_e('Header text: Label column', 'wc-pait'); ?></label><br />
+                    <input type="text" id="wcpait_header_label_text" name="wcpait_settings[header_label_text]" value="<?php echo esc_attr($header_label_text); ?>" class="regular-text" />
+                </p>
+                <p>
+                    <label for="wcpait_header_value_text"><?php esc_html_e('Header text: Value column', 'wc-pait'); ?></label><br />
+                    <input type="text" id="wcpait_header_value_text" name="wcpait_settings[header_value_text]" value="<?php echo esc_attr($header_value_text); ?>" class="regular-text" />
+                </p>
+            </div>
+        </div>
+        </div>
+
+        <div class="wcpait-tab-panel" data-panel="style">
+        <div class="wcpait-admin-grid">
+            <div class="wcpait-admin-card">
                 <h2><?php esc_html_e('Table Style Preset', 'wc-pait'); ?></h2>
                 <p>
-                    <select name="wcpait_settings[table_style]">
+                    <select name="wcpait_settings[table_style]" id="wcpait_table_style">
                         <?php foreach ($styles as $key => $label) : ?>
-                            <option value="<?php echo esc_attr($key); ?>" <?php selected(isset($settings['table_style']) ? (string) $settings['table_style'] : 'minimal', $key); ?>>
+                            <option value="<?php echo esc_attr($key); ?>" <?php selected($table_style, $key); ?>>
                                 <?php echo esc_html($label); ?>
                             </option>
                         <?php endforeach; ?>
@@ -100,30 +158,46 @@ $selected_position = isset($settings['display_position']) ? (string) $settings['
                     <label><?php esc_html_e('Border radius (px)', 'wc-pait'); ?><input type="number" min="0" max="30" name="wcpait_settings[border_radius]" value="<?php echo esc_attr((string) $settings['border_radius']); ?>" /></label>
                 </div>
             </div>
+
+            <div class="wcpait-admin-card">
+                <h2><?php esc_html_e('Live Preview', 'wc-pait'); ?></h2>
+                <p class="description"><?php esc_html_e('Preview updates in real time and uses the same style classes as frontend output.', 'wc-pait'); ?></p>
+                <div id="wcpait-live-preview" class="wcpait-table-wrap wcpait-style-<?php echo esc_attr($table_style); ?>" style="<?php echo esc_attr($preview_styles); ?>">
+                    <table class="wcpait-table">
+                        <thead <?php echo ('yes' === $show_table_header) ? '' : 'style="display:none;"'; ?>>
+                        <tr>
+                            <th class="wcpait-preview-label"><?php echo esc_html($header_label_text); ?></th>
+                            <th class="wcpait-preview-value"><?php echo esc_html($header_value_text); ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><?php esc_html_e('Material', 'wc-pait'); ?></td>
+                            <td><?php esc_html_e('SPC', 'wc-pait'); ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php esc_html_e('Thickness', 'wc-pait'); ?></td>
+                            <td><?php esc_html_e('5 mm', 'wc-pait'); ?></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         </div>
 
+        <div class="wcpait-tab-panel" data-panel="advanced">
         <div class="wcpait-admin-card">
             <h2><?php esc_html_e('Advanced', 'wc-pait'); ?></h2>
-            <p>
-                <label>
-                    <input type="checkbox" name="wcpait_settings[show_table_header]" value="yes" <?php checked(isset($settings['show_table_header']) ? (string) $settings['show_table_header'] : 'yes', 'yes'); ?> />
-                    <?php esc_html_e('Show table header (Label/Value) on frontend', 'wc-pait'); ?>
-                </label>
-            </p>
-            <p>
-                <label for="wcpait_header_label_text"><?php esc_html_e('Header text: Label column', 'wc-pait'); ?></label><br />
-                <input type="text" id="wcpait_header_label_text" name="wcpait_settings[header_label_text]" value="<?php echo esc_attr(isset($settings['header_label_text']) ? (string) $settings['header_label_text'] : __('Label', 'wc-pait')); ?>" class="regular-text" />
-            </p>
-            <p>
-                <label for="wcpait_header_value_text"><?php esc_html_e('Header text: Value column', 'wc-pait'); ?></label><br />
-                <input type="text" id="wcpait_header_value_text" name="wcpait_settings[header_value_text]" value="<?php echo esc_attr(isset($settings['header_value_text']) ? (string) $settings['header_value_text'] : __('Value', 'wc-pait')); ?>" class="regular-text" />
-            </p>
             <label>
                 <input type="checkbox" name="wcpait_settings[cleanup_on_uninstall]" value="yes" <?php checked(isset($settings['cleanup_on_uninstall']) ? (string) $settings['cleanup_on_uninstall'] : 'no', 'yes'); ?> />
                 <?php esc_html_e('Delete plugin options and product values on uninstall', 'wc-pait'); ?>
             </label>
         </div>
+        </div>
 
-        <?php submit_button(__('Save Settings', 'wc-pait')); ?>
+        <p class="submit">
+            <button type="submit" class="button button-primary" id="wcpait-save-settings-btn-bottom"><?php esc_html_e('Save Settings', 'wc-pait'); ?></button>
+        </p>
     </form>
 </div>
