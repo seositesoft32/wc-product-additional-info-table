@@ -16,7 +16,7 @@ $header_label_text = isset($settings['header_label_text']) ? (string) $settings[
 $header_value_text = isset($settings['header_value_text']) ? (string) $settings['header_value_text'] : __('Value', 'wc-pait');
 $show_table_header = isset($settings['show_table_header']) ? (string) $settings['show_table_header'] : 'yes';
 $preview_styles = sprintf(
-    '--wcpait-table-bg:%s;--wcpait-header-bg:%s;--wcpait-text:%s;--wcpait-border:%s;--wcpait-alt-row:%s;--wcpait-row-spacing:%dpx;--wcpait-cell-padding:%dpx;--wcpait-font-size:%dpx;--wcpait-radius:%dpx;--wcpait-cards-accent:%s;--wcpait-cards-badge-text:%s;--wcpait-cards-shadow:%dpx;--wcpait-grid-badge-bg:%s;--wcpait-grid-badge-text:%s;--wcpait-grid-card-bg:%s;--wcpait-grid-card-border:%s;--wcpait-ribbon-bg:%s;--wcpait-ribbon-text:%s;--wcpait-ribbon-badge-bg:%s;--wcpait-ribbon-badge-text:%s;--wcpait-minimal-line:%s;',
+    '--wcpait-table-bg:%s;--wcpait-header-bg:%s;--wcpait-text:%s;--wcpait-border:%s;--wcpait-alt-row:%s;--wcpait-row-spacing:%dpx;--wcpait-cell-padding:%dpx;--wcpait-font-size:%dpx;--wcpait-radius:%dpx;--wcpait-cards-accent:%s;--wcpait-cards-badge-text:%s;--wcpait-cards-shadow:%dpx;--wcpait-grid-badge-bg:%s;--wcpait-grid-badge-text:%s;--wcpait-grid-card-bg:%s;--wcpait-grid-card-border:%s;--wcpait-ribbon-bg:%s;--wcpait-ribbon-text:%s;--wcpait-ribbon-badge-bg:%s;--wcpait-ribbon-badge-text:%s;--wcpait-minimal-line:%s;--wcpait-glass-tint:%s;--wcpait-glass-border:%s;--wcpait-glass-glow:%dpx;--wcpait-steps-bar:%s;--wcpait-steps-badge-bg:%s;--wcpait-steps-badge-text:%s;--wcpait-chips-bg:%s;--wcpait-chips-text:%s;--wcpait-chips-border:%s;',
     esc_attr((string) $settings['table_background']),
     esc_attr((string) $settings['header_background']),
     esc_attr((string) $settings['text_color']),
@@ -37,7 +37,16 @@ $preview_styles = sprintf(
     esc_attr((string) $settings['ribbon_text_color']),
     esc_attr((string) $settings['ribbon_badge_bg']),
     esc_attr((string) $settings['ribbon_badge_text']),
-    esc_attr((string) $settings['minimal_line_color'])
+    esc_attr((string) $settings['minimal_line_color']),
+    esc_attr((string) $settings['glass_tint_color']),
+    esc_attr((string) $settings['glass_border_color']),
+    absint($settings['glass_glow_intensity']),
+    esc_attr((string) $settings['steps_bar_color']),
+    esc_attr((string) $settings['steps_badge_bg']),
+    esc_attr((string) $settings['steps_badge_text']),
+    esc_attr((string) $settings['chips_bg_color']),
+    esc_attr((string) $settings['chips_text_color']),
+    esc_attr((string) $settings['chips_border_color'])
 );
 ?>
 <div class="wrap wcpait-admin-wrap">
@@ -193,6 +202,24 @@ $preview_styles = sprintf(
                     <label><?php esc_html_e('Ribbon badge background', 'wc-pait'); ?><input type="color" name="wcpait_settings[ribbon_badge_bg]" value="<?php echo esc_attr((string) $settings['ribbon_badge_bg']); ?>" /></label>
                     <label><?php esc_html_e('Ribbon badge text', 'wc-pait'); ?><input type="color" name="wcpait_settings[ribbon_badge_text]" value="<?php echo esc_attr((string) $settings['ribbon_badge_text']); ?>" /></label>
                 </div>
+
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="glass_panel">
+                    <label><?php esc_html_e('Glass tint', 'wc-pait'); ?><input type="color" name="wcpait_settings[glass_tint_color]" value="<?php echo esc_attr((string) $settings['glass_tint_color']); ?>" /></label>
+                    <label><?php esc_html_e('Glass border', 'wc-pait'); ?><input type="color" name="wcpait_settings[glass_border_color]" value="<?php echo esc_attr((string) $settings['glass_border_color']); ?>" /></label>
+                    <label><?php esc_html_e('Glow intensity', 'wc-pait'); ?><input type="number" min="0" max="40" name="wcpait_settings[glass_glow_intensity]" value="<?php echo esc_attr((string) $settings['glass_glow_intensity']); ?>" /></label>
+                </div>
+
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="progress_steps">
+                    <label><?php esc_html_e('Step bar color', 'wc-pait'); ?><input type="color" name="wcpait_settings[steps_bar_color]" value="<?php echo esc_attr((string) $settings['steps_bar_color']); ?>" /></label>
+                    <label><?php esc_html_e('Step badge background', 'wc-pait'); ?><input type="color" name="wcpait_settings[steps_badge_bg]" value="<?php echo esc_attr((string) $settings['steps_badge_bg']); ?>" /></label>
+                    <label><?php esc_html_e('Step badge text', 'wc-pait'); ?><input type="color" name="wcpait_settings[steps_badge_text]" value="<?php echo esc_attr((string) $settings['steps_badge_text']); ?>" /></label>
+                </div>
+
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="chip_tiles">
+                    <label><?php esc_html_e('Chip background', 'wc-pait'); ?><input type="color" name="wcpait_settings[chips_bg_color]" value="<?php echo esc_attr((string) $settings['chips_bg_color']); ?>" /></label>
+                    <label><?php esc_html_e('Chip text color', 'wc-pait'); ?><input type="color" name="wcpait_settings[chips_text_color]" value="<?php echo esc_attr((string) $settings['chips_text_color']); ?>" /></label>
+                    <label><?php esc_html_e('Chip border', 'wc-pait'); ?><input type="color" name="wcpait_settings[chips_border_color]" value="<?php echo esc_attr((string) $settings['chips_border_color']); ?>" /></label>
+                </div>
             </div>
 
             <div class="wcpait-admin-card">
@@ -232,6 +259,21 @@ $preview_styles = sprintf(
                         <li class="wcpait-ribbon-item"><span class="wcpait-ribbon-badge">1</span><div><strong><?php esc_html_e('Material', 'wc-pait'); ?></strong><span><?php esc_html_e('SPC', 'wc-pait'); ?></span></div></li>
                         <li class="wcpait-ribbon-item"><span class="wcpait-ribbon-badge">2</span><div><strong><?php esc_html_e('Thickness', 'wc-pait'); ?></strong><span><?php esc_html_e('5 mm', 'wc-pait'); ?></span></div></li>
                     </ul>
+
+                    <ul class="wcpait-glass-list wcpait-preview-template" data-preview="glass_panel" style="display:none;">
+                        <li class="wcpait-glass-item"><strong><?php esc_html_e('Material', 'wc-pait'); ?></strong><span><?php esc_html_e('SPC', 'wc-pait'); ?></span></li>
+                        <li class="wcpait-glass-item"><strong><?php esc_html_e('Thickness', 'wc-pait'); ?></strong><span><?php esc_html_e('5 mm', 'wc-pait'); ?></span></li>
+                    </ul>
+
+                    <ol class="wcpait-steps-list wcpait-preview-template" data-preview="progress_steps" style="display:none;">
+                        <li class="wcpait-step-item"><span class="wcpait-step-badge">1</span><div class="wcpait-step-content"><strong><?php esc_html_e('Material', 'wc-pait'); ?></strong><span><?php esc_html_e('SPC', 'wc-pait'); ?></span></div></li>
+                        <li class="wcpait-step-item"><span class="wcpait-step-badge">2</span><div class="wcpait-step-content"><strong><?php esc_html_e('Thickness', 'wc-pait'); ?></strong><span><?php esc_html_e('5 mm', 'wc-pait'); ?></span></div></li>
+                    </ol>
+
+                    <div class="wcpait-chips-grid wcpait-preview-template" data-preview="chip_tiles" style="display:none;">
+                        <article class="wcpait-chip-item"><strong><?php esc_html_e('Material', 'wc-pait'); ?></strong><span><?php esc_html_e('SPC', 'wc-pait'); ?></span></article>
+                        <article class="wcpait-chip-item"><strong><?php esc_html_e('Thickness', 'wc-pait'); ?></strong><span><?php esc_html_e('5 mm', 'wc-pait'); ?></span></article>
+                    </div>
                 </div>
             </div>
         </div>

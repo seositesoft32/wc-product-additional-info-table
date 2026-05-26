@@ -52,6 +52,15 @@ class Defaults
             'ribbon_badge_bg' => '#0369a1',
             'ribbon_badge_text' => '#ffffff',
             'minimal_line_color' => '#cbd5e1',
+            'glass_tint_color' => '#dbeafe',
+            'glass_border_color' => '#93c5fd',
+            'glass_glow_intensity' => 18,
+            'steps_bar_color' => '#f59e0b',
+            'steps_badge_bg' => '#1d4ed8',
+            'steps_badge_text' => '#ffffff',
+            'chips_bg_color' => '#eff6ff',
+            'chips_text_color' => '#1e3a8a',
+            'chips_border_color' => '#93c5fd',
             'cleanup_on_uninstall' => 'no',
         ];
     }
@@ -84,6 +93,9 @@ class Defaults
             'badge_grid' => __('Badge Grid', 'wc-pait'),
             'ribbon_list' => __('Ribbon List', 'wc-pait'),
             'minimal_lines' => __('Minimal Lines', 'wc-pait'),
+            'glass_panel' => __('Glass Panel', 'wc-pait'),
+            'progress_steps' => __('Progress Steps', 'wc-pait'),
+            'chip_tiles' => __('Chip Tiles', 'wc-pait'),
         ];
     }
 }

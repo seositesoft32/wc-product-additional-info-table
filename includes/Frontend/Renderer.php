@@ -72,7 +72,7 @@ class Renderer
         }
 
         $wrapper_styles = sprintf(
-            '--wcpait-table-bg:%s;--wcpait-header-bg:%s;--wcpait-text:%s;--wcpait-border:%s;--wcpait-alt-row:%s;--wcpait-row-spacing:%dpx;--wcpait-cell-padding:%dpx;--wcpait-font-size:%dpx;--wcpait-radius:%dpx;--wcpait-cards-accent:%s;--wcpait-cards-badge-text:%s;--wcpait-cards-shadow:%dpx;--wcpait-grid-badge-bg:%s;--wcpait-grid-badge-text:%s;--wcpait-grid-card-bg:%s;--wcpait-grid-card-border:%s;--wcpait-ribbon-bg:%s;--wcpait-ribbon-text:%s;--wcpait-ribbon-badge-bg:%s;--wcpait-ribbon-badge-text:%s;--wcpait-minimal-line:%s;',
+            '--wcpait-table-bg:%s;--wcpait-header-bg:%s;--wcpait-text:%s;--wcpait-border:%s;--wcpait-alt-row:%s;--wcpait-row-spacing:%dpx;--wcpait-cell-padding:%dpx;--wcpait-font-size:%dpx;--wcpait-radius:%dpx;--wcpait-cards-accent:%s;--wcpait-cards-badge-text:%s;--wcpait-cards-shadow:%dpx;--wcpait-grid-badge-bg:%s;--wcpait-grid-badge-text:%s;--wcpait-grid-card-bg:%s;--wcpait-grid-card-border:%s;--wcpait-ribbon-bg:%s;--wcpait-ribbon-text:%s;--wcpait-ribbon-badge-bg:%s;--wcpait-ribbon-badge-text:%s;--wcpait-minimal-line:%s;--wcpait-glass-tint:%s;--wcpait-glass-border:%s;--wcpait-glass-glow:%dpx;--wcpait-steps-bar:%s;--wcpait-steps-badge-bg:%s;--wcpait-steps-badge-text:%s;--wcpait-chips-bg:%s;--wcpait-chips-text:%s;--wcpait-chips-border:%s;',
             esc_attr((string) $settings['table_background']),
             esc_attr((string) $settings['header_background']),
             esc_attr((string) $settings['text_color']),
@@ -93,7 +93,16 @@ class Renderer
             esc_attr((string) $settings['ribbon_text_color']),
             esc_attr((string) $settings['ribbon_badge_bg']),
             esc_attr((string) $settings['ribbon_badge_text']),
-            esc_attr((string) $settings['minimal_line_color'])
+            esc_attr((string) $settings['minimal_line_color']),
+            esc_attr((string) $settings['glass_tint_color']),
+            esc_attr((string) $settings['glass_border_color']),
+            absint($settings['glass_glow_intensity']),
+            esc_attr((string) $settings['steps_bar_color']),
+            esc_attr((string) $settings['steps_badge_bg']),
+            esc_attr((string) $settings['steps_badge_text']),
+            esc_attr((string) $settings['chips_bg_color']),
+            esc_attr((string) $settings['chips_text_color']),
+            esc_attr((string) $settings['chips_border_color'])
         );
 
         $show_table_header = isset($settings['show_table_header']) && 'yes' === (string) $settings['show_table_header'];
@@ -106,6 +115,9 @@ class Renderer
             'cards_timeline' => 'product-cards.php',
             'badge_grid' => 'product-grid.php',
             'ribbon_list' => 'product-ribbon.php',
+            'glass_panel' => 'product-glass.php',
+            'progress_steps' => 'product-steps.php',
+            'chip_tiles' => 'product-chips.php',
         ];
 
         $template_file = isset($template_map[$style]) ? $template_map[$style] : 'product-table.php';

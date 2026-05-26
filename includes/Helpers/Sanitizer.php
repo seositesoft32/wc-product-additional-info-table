@@ -58,6 +58,18 @@ class Sanitizer
 
         $settings['minimal_line_color'] = sanitize_hex_color(isset($input['minimal_line_color']) ? $input['minimal_line_color'] : '') ?: $defaults['minimal_line_color'];
 
+        $settings['glass_tint_color'] = sanitize_hex_color(isset($input['glass_tint_color']) ? $input['glass_tint_color'] : '') ?: $defaults['glass_tint_color'];
+        $settings['glass_border_color'] = sanitize_hex_color(isset($input['glass_border_color']) ? $input['glass_border_color'] : '') ?: $defaults['glass_border_color'];
+        $settings['glass_glow_intensity'] = self::int_range(isset($input['glass_glow_intensity']) ? $input['glass_glow_intensity'] : $defaults['glass_glow_intensity'], 0, 40, (int) $defaults['glass_glow_intensity']);
+
+        $settings['steps_bar_color'] = sanitize_hex_color(isset($input['steps_bar_color']) ? $input['steps_bar_color'] : '') ?: $defaults['steps_bar_color'];
+        $settings['steps_badge_bg'] = sanitize_hex_color(isset($input['steps_badge_bg']) ? $input['steps_badge_bg'] : '') ?: $defaults['steps_badge_bg'];
+        $settings['steps_badge_text'] = sanitize_hex_color(isset($input['steps_badge_text']) ? $input['steps_badge_text'] : '') ?: $defaults['steps_badge_text'];
+
+        $settings['chips_bg_color'] = sanitize_hex_color(isset($input['chips_bg_color']) ? $input['chips_bg_color'] : '') ?: $defaults['chips_bg_color'];
+        $settings['chips_text_color'] = sanitize_hex_color(isset($input['chips_text_color']) ? $input['chips_text_color'] : '') ?: $defaults['chips_text_color'];
+        $settings['chips_border_color'] = sanitize_hex_color(isset($input['chips_border_color']) ? $input['chips_border_color'] : '') ?: $defaults['chips_border_color'];
+
         $settings['cleanup_on_uninstall'] = (!empty($input['cleanup_on_uninstall']) && 'yes' === $input['cleanup_on_uninstall']) ? 'yes' : 'no';
 
         return $settings;

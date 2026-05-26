@@ -188,6 +188,99 @@
     margin-top: 2px;
 }
 
+.wcpait-glass-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.wcpait-style-glass_panel .wcpait-glass-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid var(--wcpait-glass-border, #93c5fd);
+    background: color-mix(in srgb, var(--wcpait-glass-tint, #dbeafe) 55%, #ffffff);
+    border-radius: calc(var(--wcpait-radius, 8px) + 4px);
+    padding: 12px 14px;
+    box-shadow: 0 6px var(--wcpait-glass-glow, 18px) rgba(59, 130, 246, 0.2);
+    backdrop-filter: blur(6px);
+}
+
+.wcpait-style-glass_panel .wcpait-glass-item strong {
+    font-weight: 700;
+}
+
+.wcpait-style-progress_steps .wcpait-steps-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+}
+
+.wcpait-style-progress_steps .wcpait-step-item {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-left: 5px solid var(--wcpait-steps-bar, #f59e0b);
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.wcpait-style-progress_steps .wcpait-step-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: var(--wcpait-steps-badge-bg, #1d4ed8);
+    color: var(--wcpait-steps-badge-text, #fff);
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.wcpait-style-progress_steps .wcpait-step-content strong,
+.wcpait-style-progress_steps .wcpait-step-content span {
+    display: block;
+}
+
+.wcpait-style-progress_steps .wcpait-step-content span {
+    margin-top: 2px;
+    opacity: 0.9;
+}
+
+.wcpait-style-chip_tiles .wcpait-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+}
+
+.wcpait-style-chip_tiles .wcpait-chip-item {
+    border: 1px solid var(--wcpait-chips-border, #93c5fd);
+    background: var(--wcpait-chips-bg, #eff6ff);
+    color: var(--wcpait-chips-text, #1e3a8a);
+    border-radius: 999px;
+    padding: 8px 12px;
+}
+
+.wcpait-style-chip_tiles .wcpait-chip-item strong,
+.wcpait-style-chip_tiles .wcpait-chip-item span {
+    display: block;
+}
+
+.wcpait-style-chip_tiles .wcpait-chip-item span {
+    margin-top: 1px;
+    font-size: 0.92em;
+    opacity: 0.95;
+}
+
 @media (max-width: 767px) {
     .wcpait-table thead {
         display: none;

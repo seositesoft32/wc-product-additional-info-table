@@ -64,7 +64,7 @@
         var valueHeading = $('input[name="wcpait_settings[header_value_text]"]').val() || 'Value';
 
         $preview
-            .removeClass('wcpait-style-clean_table wcpait-style-cards_timeline wcpait-style-badge_grid wcpait-style-ribbon_list wcpait-style-minimal_lines')
+            .removeClass('wcpait-style-clean_table wcpait-style-cards_timeline wcpait-style-badge_grid wcpait-style-ribbon_list wcpait-style-minimal_lines wcpait-style-glass_panel wcpait-style-progress_steps wcpait-style-chip_tiles')
             .addClass('wcpait-style-' + style);
 
         $preview.css('--wcpait-table-bg', sanitizeCssValue($('input[name="wcpait_settings[table_background]"]').val(), '#ffffff'));
@@ -88,6 +88,15 @@
         $preview.css('--wcpait-ribbon-badge-bg', sanitizeCssValue($('input[name="wcpait_settings[ribbon_badge_bg]"]').val(), '#0369a1'));
         $preview.css('--wcpait-ribbon-badge-text', sanitizeCssValue($('input[name="wcpait_settings[ribbon_badge_text]"]').val(), '#ffffff'));
         $preview.css('--wcpait-minimal-line', sanitizeCssValue($('input[name="wcpait_settings[minimal_line_color]"]').val(), '#cbd5e1'));
+        $preview.css('--wcpait-glass-tint', sanitizeCssValue($('input[name="wcpait_settings[glass_tint_color]"]').val(), '#dbeafe'));
+        $preview.css('--wcpait-glass-border', sanitizeCssValue($('input[name="wcpait_settings[glass_border_color]"]').val(), '#93c5fd'));
+        $preview.css('--wcpait-glass-glow', (parseInt($('input[name="wcpait_settings[glass_glow_intensity]"]').val(), 10) || 18) + 'px');
+        $preview.css('--wcpait-steps-bar', sanitizeCssValue($('input[name="wcpait_settings[steps_bar_color]"]').val(), '#f59e0b'));
+        $preview.css('--wcpait-steps-badge-bg', sanitizeCssValue($('input[name="wcpait_settings[steps_badge_bg]"]').val(), '#1d4ed8'));
+        $preview.css('--wcpait-steps-badge-text', sanitizeCssValue($('input[name="wcpait_settings[steps_badge_text]"]').val(), '#ffffff'));
+        $preview.css('--wcpait-chips-bg', sanitizeCssValue($('input[name="wcpait_settings[chips_bg_color]"]').val(), '#eff6ff'));
+        $preview.css('--wcpait-chips-text', sanitizeCssValue($('input[name="wcpait_settings[chips_text_color]"]').val(), '#1e3a8a'));
+        $preview.css('--wcpait-chips-border', sanitizeCssValue($('input[name="wcpait_settings[chips_border_color]"]').val(), '#93c5fd'));
 
         $preview.find('.wcpait-preview-label').text(labelHeading);
         $preview.find('.wcpait-preview-value').text(valueHeading);
