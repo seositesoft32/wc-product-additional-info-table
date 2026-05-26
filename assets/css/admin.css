@@ -38,9 +38,9 @@
     flex-wrap: wrap;
     gap: 8px;
     margin: 8px 0 14px;
-    padding: 8px;
+    padding: 0px;
     border: 1px solid #d6dde5;
-    border-radius: 18px;
+    border-radius: 0;
     background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
     box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
 }
@@ -61,14 +61,20 @@
     min-height: 44px;
     border: 1px solid transparent;
     border-radius: 999px;
-    padding: 10px 16px;
+    padding: 5px 10px !important;
     background: transparent;
     color: #334155;
     font-size: 13px;
     font-weight: 600;
     line-height: 1;
-    text-decoration: none;
+    text-decoration: none !important;
     transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.wcpait-tab:focus {
+    outline: none;
+    border-radius: 0px !important;
+    box-shadow: none !important;
 }
 
 .wcpait-tab .dashicons {
@@ -79,27 +85,35 @@
     transition: color 160ms ease;
 }
 
-.wcpait-tab:hover {
-    background: rgba(34, 113, 177, 0.08);
-    color: #0f4f7c;
-}
 
 .wcpait-tab:hover .dashicons {
     color: #2271b1;
 }
 
-.wcpait-tab:focus-visible {
+/* .wcpait-tab:focus-visible {
     outline: none;
     border-color: #9ec7eb;
     box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.18);
+} */
+
+
+.wcpait-tab.is-active:hover,
+.wcpait-tab.is-active {
+    border-color: #2271b1 !important;
+    background: linear-gradient(135deg, #2271b1 0%, #135e96 100%) !important;
+    color: #fff !important;
+    /* box-shadow: 0 10px 24px rgba(19, 94, 150, 0.22); */
+    /* transform: translateY(-1px); */
 }
 
-.wcpait-tab.is-active {
-    border-color: #2271b1;
-    background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
-    color: #fff;
-    box-shadow: 0 10px 24px rgba(19, 94, 150, 0.22);
-    transform: translateY(-1px);
+.wcpait-tab:hover {
+    background: rgba(34, 113, 177, 0.08);
+    color: #0f4f7c;
+}
+
+.wcpait-tab.is-active:hover {
+    /* background: linear-gradient(135deg, #2271b1 0%, #135e96 100%); */
+    /* color: #fff; */
 }
 
 .wcpait-tab.is-active .dashicons {
