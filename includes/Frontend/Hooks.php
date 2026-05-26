@@ -11,9 +11,7 @@ class Hooks
         add_filter('the_content', [$this, 'inject_into_description_tab']);
 
         $settings = Settings::get();
-        $positions = isset($settings['display_positions']) && is_array($settings['display_positions'])
-            ? $settings['display_positions']
-            : [];
+        $position = isset($settings['display_position']) ? (string) $settings['display_position'] : 'shortcode';
 
         $map = [
             'after_summary' => ['woocommerce_single_product_summary', 40],
@@ -24,11 +22,7 @@ class Hooks
             'after_related_products' => ['woocommerce_after_single_product_summary', 25],
         ];
 
-        foreach ($positions as $position) {
-            if (!isset($map[$position])) {
-                continue;
-            }
-
+        if (isset($map[$position])) {
             add_action($map[$position][0], [$this, 'output_table'], (int) $map[$position][1]);
         }
     }
@@ -58,11 +52,9 @@ class Hooks
         }
 
         $settings = Settings::get();
-        $positions = isset($settings['display_positions']) && is_array($settings['display_positions'])
-            ? $settings['display_positions']
-            : [];
+        $position = isset($settings['display_position']) ? (string) $settings['display_position'] : 'shortcode';
 
-        if (!in_array('inside_description_tab', $positions, true)) {
+        if ('inside_description_tab' !== $position) {
             return $content;
         }
 

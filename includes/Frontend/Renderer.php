@@ -73,6 +73,8 @@ class Renderer
             absint($settings['border_radius'])
         );
 
+        $show_table_header = isset($settings['show_table_header']) && 'yes' === (string) $settings['show_table_header'];
+
         ob_start();
         include WCPAIT_PATH . 'templates/frontend/product-table.php';
 

@@ -16,7 +16,10 @@ class Sanitizer
 
         $settings = [];
         $settings['fields'] = self::sanitize_fields(isset($input['fields']) ? $input['fields'] : []);
-        $settings['display_positions'] = self::sanitize_display_positions(isset($input['display_positions']) ? $input['display_positions'] : []);
+        $settings['display_position'] = self::sanitize_display_position(
+            isset($input['display_position']) ? $input['display_position'] : (isset($input['display_positions']) ? $input['display_positions'] : $defaults['display_position'])
+        );
+        $settings['show_table_header'] = (!empty($input['show_table_header']) && 'yes' === $input['show_table_header']) ? 'yes' : 'no';
 
         $settings['table_style'] = self::allowed_string(
             isset($input['table_style']) ? $input['table_style'] : $defaults['table_style'],
@@ -80,27 +83,30 @@ class Sanitizer
     }
 
     /**
-     * @param mixed $positions
-     * @return array<int, string>
+     * @param mixed $position
      */
-    private static function sanitize_display_positions($positions): array
+    private static function sanitize_display_position($position): string
     {
         $allowed = array_keys(Defaults::position_options());
-        $positions = is_array($positions) ? $positions : [];
 
-        $sanitized = [];
-        foreach ($positions as $position) {
-            $value = sanitize_key((string) $position);
-            if (in_array($value, $allowed, true)) {
-                $sanitized[] = $value;
+        // Backward compatibility: if older multi-value payload arrives, use first valid position.
+        if (is_array($position)) {
+            foreach ($position as $item) {
+                $value = sanitize_key((string) $item);
+                if (in_array($value, $allowed, true)) {
+                    return $value;
+                }
             }
+
+            return 'shortcode';
         }
 
-        if (empty($sanitized)) {
-            $sanitized[] = 'shortcode';
+        $position = sanitize_key((string) $position);
+        if (!in_array($position, $allowed, true)) {
+            return 'shortcode';
         }
 
-        return array_values(array_unique($sanitized));
+        return $position;
     }
 
     /**

@@ -26,10 +26,8 @@ class Defaults
                     'suffix' => __('mm', 'wc-pait'),
                 ],
             ],
-            'display_positions' => [
-                'shortcode',
-                'after_add_to_cart',
-            ],
+            'display_position' => 'after_add_to_cart',
+            'show_table_header' => 'yes',
             'table_style' => 'minimal',
             'table_background' => '#ffffff',
             'header_background' => '#f3f4f6',

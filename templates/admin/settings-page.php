@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 $fields = isset($settings['fields']) && is_array($settings['fields']) ? $settings['fields'] : [];
-$selected_positions = isset($settings['display_positions']) && is_array($settings['display_positions']) ? $settings['display_positions'] : [];
+$selected_position = isset($settings['display_position']) ? (string) $settings['display_position'] : 'shortcode';
 ?>
 <div class="wrap wcpait-admin-wrap">
     <h1><?php esc_html_e('WC Product Additional Info Table', 'wc-pait'); ?></h1>
@@ -64,14 +64,15 @@ $selected_positions = isset($settings['display_positions']) && is_array($setting
         <div class="wcpait-admin-grid">
             <div class="wcpait-admin-card">
                 <h2><?php esc_html_e('Display Positions', 'wc-pait'); ?></h2>
-                <?php foreach ($positions as $key => $label) : ?>
-                    <p>
-                        <label>
-                            <input type="checkbox" name="wcpait_settings[display_positions][]" value="<?php echo esc_attr($key); ?>" <?php checked(in_array($key, $selected_positions, true)); ?> />
-                            <?php echo esc_html($label); ?>
-                        </label>
-                    </p>
-                <?php endforeach; ?>
+                <p>
+                    <select name="wcpait_settings[display_position]">
+                        <?php foreach ($positions as $key => $label) : ?>
+                            <option value="<?php echo esc_attr($key); ?>" <?php selected($selected_position, $key); ?>>
+                                <?php echo esc_html($label); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </p>
                 <p class="description"><?php esc_html_e('Use shortcode option to render manually with [product_additional_info].', 'wc-pait'); ?></p>
             </div>
 
@@ -103,6 +104,12 @@ $selected_positions = isset($settings['display_positions']) && is_array($setting
 
         <div class="wcpait-admin-card">
             <h2><?php esc_html_e('Advanced', 'wc-pait'); ?></h2>
+            <p>
+                <label>
+                    <input type="checkbox" name="wcpait_settings[show_table_header]" value="yes" <?php checked(isset($settings['show_table_header']) ? (string) $settings['show_table_header'] : 'yes', 'yes'); ?> />
+                    <?php esc_html_e('Show table header (Label/Value) on frontend', 'wc-pait'); ?>
+                </label>
+            </p>
             <label>
                 <input type="checkbox" name="wcpait_settings[cleanup_on_uninstall]" value="yes" <?php checked(isset($settings['cleanup_on_uninstall']) ? (string) $settings['cleanup_on_uninstall'] : 'no', 'yes'); ?> />
                 <?php esc_html_e('Delete plugin options and product values on uninstall', 'wc-pait'); ?>
