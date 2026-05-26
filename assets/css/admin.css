@@ -107,6 +107,14 @@
     gap: 6px;
 }
 
+.wcpait-style-options {
+    margin-top: 12px;
+}
+
+#wcpait-live-preview .wcpait-preview-template {
+    margin: 0;
+}
+
 #wcpait-live-preview {
     margin-top: 12px;
 }

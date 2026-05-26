@@ -23,8 +23,10 @@ class Sanitizer
         $settings['header_label_text'] = sanitize_text_field(isset($input['header_label_text']) ? $input['header_label_text'] : $defaults['header_label_text']);
         $settings['header_value_text'] = sanitize_text_field(isset($input['header_value_text']) ? $input['header_value_text'] : $defaults['header_value_text']);
 
+        $style_input = isset($input['table_style']) ? $input['table_style'] : $defaults['table_style'];
+        $style_input = self::map_legacy_style((string) $style_input);
         $settings['table_style'] = self::allowed_string(
-            isset($input['table_style']) ? $input['table_style'] : $defaults['table_style'],
+            $style_input,
             array_keys(Defaults::table_styles()),
             $defaults['table_style']
         );
@@ -39,6 +41,22 @@ class Sanitizer
         $settings['cell_padding'] = self::int_range(isset($input['cell_padding']) ? $input['cell_padding'] : $defaults['cell_padding'], 4, 40, (int) $defaults['cell_padding']);
         $settings['font_size'] = self::int_range(isset($input['font_size']) ? $input['font_size'] : $defaults['font_size'], 10, 24, (int) $defaults['font_size']);
         $settings['border_radius'] = self::int_range(isset($input['border_radius']) ? $input['border_radius'] : $defaults['border_radius'], 0, 30, (int) $defaults['border_radius']);
+
+        $settings['cards_accent_color'] = sanitize_hex_color(isset($input['cards_accent_color']) ? $input['cards_accent_color'] : '') ?: $defaults['cards_accent_color'];
+        $settings['cards_badge_text_color'] = sanitize_hex_color(isset($input['cards_badge_text_color']) ? $input['cards_badge_text_color'] : '') ?: $defaults['cards_badge_text_color'];
+        $settings['cards_shadow_intensity'] = self::int_range(isset($input['cards_shadow_intensity']) ? $input['cards_shadow_intensity'] : $defaults['cards_shadow_intensity'], 0, 35, (int) $defaults['cards_shadow_intensity']);
+
+        $settings['grid_badge_bg'] = sanitize_hex_color(isset($input['grid_badge_bg']) ? $input['grid_badge_bg'] : '') ?: $defaults['grid_badge_bg'];
+        $settings['grid_badge_text'] = sanitize_hex_color(isset($input['grid_badge_text']) ? $input['grid_badge_text'] : '') ?: $defaults['grid_badge_text'];
+        $settings['grid_card_bg'] = sanitize_hex_color(isset($input['grid_card_bg']) ? $input['grid_card_bg'] : '') ?: $defaults['grid_card_bg'];
+        $settings['grid_card_border'] = sanitize_hex_color(isset($input['grid_card_border']) ? $input['grid_card_border'] : '') ?: $defaults['grid_card_border'];
+
+        $settings['ribbon_bg_color'] = sanitize_hex_color(isset($input['ribbon_bg_color']) ? $input['ribbon_bg_color'] : '') ?: $defaults['ribbon_bg_color'];
+        $settings['ribbon_text_color'] = sanitize_hex_color(isset($input['ribbon_text_color']) ? $input['ribbon_text_color'] : '') ?: $defaults['ribbon_text_color'];
+        $settings['ribbon_badge_bg'] = sanitize_hex_color(isset($input['ribbon_badge_bg']) ? $input['ribbon_badge_bg'] : '') ?: $defaults['ribbon_badge_bg'];
+        $settings['ribbon_badge_text'] = sanitize_hex_color(isset($input['ribbon_badge_text']) ? $input['ribbon_badge_text'] : '') ?: $defaults['ribbon_badge_text'];
+
+        $settings['minimal_line_color'] = sanitize_hex_color(isset($input['minimal_line_color']) ? $input['minimal_line_color'] : '') ?: $defaults['minimal_line_color'];
 
         $settings['cleanup_on_uninstall'] = (!empty($input['cleanup_on_uninstall']) && 'yes' === $input['cleanup_on_uninstall']) ? 'yes' : 'no';
 
@@ -133,6 +151,21 @@ class Sanitizer
         }
 
         return $value;
+    }
+
+    private static function map_legacy_style(string $style): string
+    {
+        $style = sanitize_key($style);
+
+        $map = [
+            'minimal' => 'clean_table',
+            'modern' => 'cards_timeline',
+            'classic' => 'badge_grid',
+            'dark' => 'ribbon_list',
+            'compact' => 'minimal_lines',
+        ];
+
+        return isset($map[$style]) ? $map[$style] : $style;
     }
 
     /**

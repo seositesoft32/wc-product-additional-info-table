@@ -36,19 +36,35 @@
         return value && String(value).trim() ? String(value).trim() : fallback;
     }
 
+    function updateStyleOptionGroups(style) {
+        $('.wcpait-style-options').each(function () {
+            var styles = String($(this).data('styles') || '').split(/\s*,\s*/);
+            var shouldShow = styles.indexOf(style) !== -1;
+            $(this).toggle(shouldShow);
+        });
+    }
+
+    function updatePreviewTemplate(style) {
+        $('#wcpait-live-preview').find('.wcpait-preview-template').each(function () {
+            var supports = String($(this).data('preview') || '').split(/\s+/);
+            var visible = supports.indexOf(style) !== -1;
+            $(this).toggle(visible);
+        });
+    }
+
     function updateLivePreview() {
         var $preview = $('#wcpait-live-preview');
         if (!$preview.length) {
             return;
         }
 
-        var style = $('select[name="wcpait_settings[table_style]"]').val() || 'minimal';
+        var style = $('select[name="wcpait_settings[table_style]"]').val() || 'clean_table';
         var showHeader = $('input[name="wcpait_settings[show_table_header]"]').is(':checked');
         var labelHeading = $('input[name="wcpait_settings[header_label_text]"]').val() || 'Label';
         var valueHeading = $('input[name="wcpait_settings[header_value_text]"]').val() || 'Value';
 
         $preview
-            .removeClass('wcpait-style-minimal wcpait-style-modern wcpait-style-classic wcpait-style-dark wcpait-style-compact')
+            .removeClass('wcpait-style-clean_table wcpait-style-cards_timeline wcpait-style-badge_grid wcpait-style-ribbon_list wcpait-style-minimal_lines')
             .addClass('wcpait-style-' + style);
 
         $preview.css('--wcpait-table-bg', sanitizeCssValue($('input[name="wcpait_settings[table_background]"]').val(), '#ffffff'));
@@ -60,10 +76,25 @@
         $preview.css('--wcpait-cell-padding', (parseInt($('input[name="wcpait_settings[cell_padding]"]').val(), 10) || 12) + 'px');
         $preview.css('--wcpait-font-size', (parseInt($('input[name="wcpait_settings[font_size]"]').val(), 10) || 14) + 'px');
         $preview.css('--wcpait-radius', (parseInt($('input[name="wcpait_settings[border_radius]"]').val(), 10) || 8) + 'px');
+        $preview.css('--wcpait-cards-accent', sanitizeCssValue($('input[name="wcpait_settings[cards_accent_color]"]').val(), '#2563eb'));
+        $preview.css('--wcpait-cards-badge-text', sanitizeCssValue($('input[name="wcpait_settings[cards_badge_text_color]"]').val(), '#ffffff'));
+        $preview.css('--wcpait-cards-shadow', (parseInt($('input[name="wcpait_settings[cards_shadow_intensity]"]').val(), 10) || 12) + 'px');
+        $preview.css('--wcpait-grid-badge-bg', sanitizeCssValue($('input[name="wcpait_settings[grid_badge_bg]"]').val(), '#7c3aed'));
+        $preview.css('--wcpait-grid-badge-text', sanitizeCssValue($('input[name="wcpait_settings[grid_badge_text]"]').val(), '#ffffff'));
+        $preview.css('--wcpait-grid-card-bg', sanitizeCssValue($('input[name="wcpait_settings[grid_card_bg]"]').val(), '#ffffff'));
+        $preview.css('--wcpait-grid-card-border', sanitizeCssValue($('input[name="wcpait_settings[grid_card_border]"]').val(), '#e5e7eb'));
+        $preview.css('--wcpait-ribbon-bg', sanitizeCssValue($('input[name="wcpait_settings[ribbon_bg_color]"]').val(), '#0ea5e9'));
+        $preview.css('--wcpait-ribbon-text', sanitizeCssValue($('input[name="wcpait_settings[ribbon_text_color]"]').val(), '#ffffff'));
+        $preview.css('--wcpait-ribbon-badge-bg', sanitizeCssValue($('input[name="wcpait_settings[ribbon_badge_bg]"]').val(), '#0369a1'));
+        $preview.css('--wcpait-ribbon-badge-text', sanitizeCssValue($('input[name="wcpait_settings[ribbon_badge_text]"]').val(), '#ffffff'));
+        $preview.css('--wcpait-minimal-line', sanitizeCssValue($('input[name="wcpait_settings[minimal_line_color]"]').val(), '#cbd5e1'));
 
         $preview.find('.wcpait-preview-label').text(labelHeading);
         $preview.find('.wcpait-preview-value').text(valueHeading);
         $preview.find('thead').toggle(showHeader);
+
+        updateStyleOptionGroups(style);
+        updatePreviewTemplate(style);
     }
 
     function refreshIndexes() {

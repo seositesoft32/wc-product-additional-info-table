@@ -30,7 +30,7 @@ class Defaults
             'show_table_header' => 'yes',
             'header_label_text' => __('Label', 'wc-pait'),
             'header_value_text' => __('Value', 'wc-pait'),
-            'table_style' => 'minimal',
+            'table_style' => 'clean_table',
             'table_background' => '#ffffff',
             'header_background' => '#f3f4f6',
             'text_color' => '#1f2937',
@@ -40,6 +40,18 @@ class Defaults
             'cell_padding' => 12,
             'font_size' => 14,
             'border_radius' => 8,
+            'cards_accent_color' => '#2563eb',
+            'cards_badge_text_color' => '#ffffff',
+            'cards_shadow_intensity' => 12,
+            'grid_badge_bg' => '#7c3aed',
+            'grid_badge_text' => '#ffffff',
+            'grid_card_bg' => '#ffffff',
+            'grid_card_border' => '#e5e7eb',
+            'ribbon_bg_color' => '#0ea5e9',
+            'ribbon_text_color' => '#ffffff',
+            'ribbon_badge_bg' => '#0369a1',
+            'ribbon_badge_text' => '#ffffff',
+            'minimal_line_color' => '#cbd5e1',
             'cleanup_on_uninstall' => 'no',
         ];
     }
@@ -67,11 +79,11 @@ class Defaults
     public static function table_styles(): array
     {
         return [
-            'minimal' => __('Minimal', 'wc-pait'),
-            'modern' => __('Modern', 'wc-pait'),
-            'classic' => __('Classic', 'wc-pait'),
-            'dark' => __('Dark', 'wc-pait'),
-            'compact' => __('Compact', 'wc-pait'),
+            'clean_table' => __('Clean Table', 'wc-pait'),
+            'cards_timeline' => __('Timeline Cards', 'wc-pait'),
+            'badge_grid' => __('Badge Grid', 'wc-pait'),
+            'ribbon_list' => __('Ribbon List', 'wc-pait'),
+            'minimal_lines' => __('Minimal Lines', 'wc-pait'),
         ];
     }
 }

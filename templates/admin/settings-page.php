@@ -11,12 +11,12 @@ if (!defined('ABSPATH')) {
 
 $fields = isset($settings['fields']) && is_array($settings['fields']) ? $settings['fields'] : [];
 $selected_position = isset($settings['display_position']) ? (string) $settings['display_position'] : 'shortcode';
-$table_style = isset($settings['table_style']) ? (string) $settings['table_style'] : 'minimal';
+$table_style = isset($settings['table_style']) ? (string) $settings['table_style'] : 'clean_table';
 $header_label_text = isset($settings['header_label_text']) ? (string) $settings['header_label_text'] : __('Label', 'wc-pait');
 $header_value_text = isset($settings['header_value_text']) ? (string) $settings['header_value_text'] : __('Value', 'wc-pait');
 $show_table_header = isset($settings['show_table_header']) ? (string) $settings['show_table_header'] : 'yes';
 $preview_styles = sprintf(
-    '--wcpait-table-bg:%s;--wcpait-header-bg:%s;--wcpait-text:%s;--wcpait-border:%s;--wcpait-alt-row:%s;--wcpait-row-spacing:%dpx;--wcpait-cell-padding:%dpx;--wcpait-font-size:%dpx;--wcpait-radius:%dpx;',
+    '--wcpait-table-bg:%s;--wcpait-header-bg:%s;--wcpait-text:%s;--wcpait-border:%s;--wcpait-alt-row:%s;--wcpait-row-spacing:%dpx;--wcpait-cell-padding:%dpx;--wcpait-font-size:%dpx;--wcpait-radius:%dpx;--wcpait-cards-accent:%s;--wcpait-cards-badge-text:%s;--wcpait-cards-shadow:%dpx;--wcpait-grid-badge-bg:%s;--wcpait-grid-badge-text:%s;--wcpait-grid-card-bg:%s;--wcpait-grid-card-border:%s;--wcpait-ribbon-bg:%s;--wcpait-ribbon-text:%s;--wcpait-ribbon-badge-bg:%s;--wcpait-ribbon-badge-text:%s;--wcpait-minimal-line:%s;',
     esc_attr((string) $settings['table_background']),
     esc_attr((string) $settings['header_background']),
     esc_attr((string) $settings['text_color']),
@@ -25,7 +25,19 @@ $preview_styles = sprintf(
     absint($settings['row_spacing']),
     absint($settings['cell_padding']),
     absint($settings['font_size']),
-    absint($settings['border_radius'])
+    absint($settings['border_radius']),
+    esc_attr((string) $settings['cards_accent_color']),
+    esc_attr((string) $settings['cards_badge_text_color']),
+    absint($settings['cards_shadow_intensity']),
+    esc_attr((string) $settings['grid_badge_bg']),
+    esc_attr((string) $settings['grid_badge_text']),
+    esc_attr((string) $settings['grid_card_bg']),
+    esc_attr((string) $settings['grid_card_border']),
+    esc_attr((string) $settings['ribbon_bg_color']),
+    esc_attr((string) $settings['ribbon_text_color']),
+    esc_attr((string) $settings['ribbon_badge_bg']),
+    esc_attr((string) $settings['ribbon_badge_text']),
+    esc_attr((string) $settings['minimal_line_color'])
 );
 ?>
 <div class="wrap wcpait-admin-wrap">
@@ -146,7 +158,7 @@ $preview_styles = sprintf(
                     </select>
                 </p>
 
-                <div class="wcpait-style-grid">
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="clean_table,minimal_lines">
                     <label><?php esc_html_e('Table background', 'wc-pait'); ?><input type="color" name="wcpait_settings[table_background]" value="<?php echo esc_attr((string) $settings['table_background']); ?>" /></label>
                     <label><?php esc_html_e('Header background', 'wc-pait'); ?><input type="color" name="wcpait_settings[header_background]" value="<?php echo esc_attr((string) $settings['header_background']); ?>" /></label>
                     <label><?php esc_html_e('Text color', 'wc-pait'); ?><input type="color" name="wcpait_settings[text_color]" value="<?php echo esc_attr((string) $settings['text_color']); ?>" /></label>
@@ -157,13 +169,37 @@ $preview_styles = sprintf(
                     <label><?php esc_html_e('Typography size (px)', 'wc-pait'); ?><input type="number" min="10" max="24" name="wcpait_settings[font_size]" value="<?php echo esc_attr((string) $settings['font_size']); ?>" /></label>
                     <label><?php esc_html_e('Border radius (px)', 'wc-pait'); ?><input type="number" min="0" max="30" name="wcpait_settings[border_radius]" value="<?php echo esc_attr((string) $settings['border_radius']); ?>" /></label>
                 </div>
+
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="minimal_lines">
+                    <label><?php esc_html_e('Line color', 'wc-pait'); ?><input type="color" name="wcpait_settings[minimal_line_color]" value="<?php echo esc_attr((string) $settings['minimal_line_color']); ?>" /></label>
+                </div>
+
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="cards_timeline">
+                    <label><?php esc_html_e('Card accent color', 'wc-pait'); ?><input type="color" name="wcpait_settings[cards_accent_color]" value="<?php echo esc_attr((string) $settings['cards_accent_color']); ?>" /></label>
+                    <label><?php esc_html_e('Badge text color', 'wc-pait'); ?><input type="color" name="wcpait_settings[cards_badge_text_color]" value="<?php echo esc_attr((string) $settings['cards_badge_text_color']); ?>" /></label>
+                    <label><?php esc_html_e('Shadow depth', 'wc-pait'); ?><input type="number" min="0" max="35" name="wcpait_settings[cards_shadow_intensity]" value="<?php echo esc_attr((string) $settings['cards_shadow_intensity']); ?>" /></label>
+                </div>
+
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="badge_grid">
+                    <label><?php esc_html_e('Card background', 'wc-pait'); ?><input type="color" name="wcpait_settings[grid_card_bg]" value="<?php echo esc_attr((string) $settings['grid_card_bg']); ?>" /></label>
+                    <label><?php esc_html_e('Card border', 'wc-pait'); ?><input type="color" name="wcpait_settings[grid_card_border]" value="<?php echo esc_attr((string) $settings['grid_card_border']); ?>" /></label>
+                    <label><?php esc_html_e('Badge background', 'wc-pait'); ?><input type="color" name="wcpait_settings[grid_badge_bg]" value="<?php echo esc_attr((string) $settings['grid_badge_bg']); ?>" /></label>
+                    <label><?php esc_html_e('Badge text color', 'wc-pait'); ?><input type="color" name="wcpait_settings[grid_badge_text]" value="<?php echo esc_attr((string) $settings['grid_badge_text']); ?>" /></label>
+                </div>
+
+                <div class="wcpait-style-grid wcpait-style-options" data-styles="ribbon_list">
+                    <label><?php esc_html_e('Ribbon background', 'wc-pait'); ?><input type="color" name="wcpait_settings[ribbon_bg_color]" value="<?php echo esc_attr((string) $settings['ribbon_bg_color']); ?>" /></label>
+                    <label><?php esc_html_e('Ribbon text color', 'wc-pait'); ?><input type="color" name="wcpait_settings[ribbon_text_color]" value="<?php echo esc_attr((string) $settings['ribbon_text_color']); ?>" /></label>
+                    <label><?php esc_html_e('Ribbon badge background', 'wc-pait'); ?><input type="color" name="wcpait_settings[ribbon_badge_bg]" value="<?php echo esc_attr((string) $settings['ribbon_badge_bg']); ?>" /></label>
+                    <label><?php esc_html_e('Ribbon badge text', 'wc-pait'); ?><input type="color" name="wcpait_settings[ribbon_badge_text]" value="<?php echo esc_attr((string) $settings['ribbon_badge_text']); ?>" /></label>
+                </div>
             </div>
 
             <div class="wcpait-admin-card">
                 <h2><?php esc_html_e('Live Preview', 'wc-pait'); ?></h2>
                 <p class="description"><?php esc_html_e('Preview updates in real time and uses the same style classes as frontend output.', 'wc-pait'); ?></p>
                 <div id="wcpait-live-preview" class="wcpait-table-wrap wcpait-style-<?php echo esc_attr($table_style); ?>" style="<?php echo esc_attr($preview_styles); ?>">
-                    <table class="wcpait-table">
+                    <table class="wcpait-table wcpait-preview-template" data-preview="clean_table minimal_lines">
                         <thead <?php echo ('yes' === $show_table_header) ? '' : 'style="display:none;"'; ?>>
                         <tr>
                             <th class="wcpait-preview-label"><?php echo esc_html($header_label_text); ?></th>
@@ -181,6 +217,21 @@ $preview_styles = sprintf(
                         </tr>
                         </tbody>
                     </table>
+
+                    <ol class="wcpait-cards-list wcpait-preview-template" data-preview="cards_timeline" style="display:none;">
+                        <li class="wcpait-card-item"><span class="wcpait-card-index">1</span><div class="wcpait-card-content"><h4><?php esc_html_e('Material', 'wc-pait'); ?></h4><p><?php esc_html_e('SPC', 'wc-pait'); ?></p></div></li>
+                        <li class="wcpait-card-item"><span class="wcpait-card-index">2</span><div class="wcpait-card-content"><h4><?php esc_html_e('Thickness', 'wc-pait'); ?></h4><p><?php esc_html_e('5 mm', 'wc-pait'); ?></p></div></li>
+                    </ol>
+
+                    <div class="wcpait-grid-list wcpait-preview-template" data-preview="badge_grid" style="display:none;">
+                        <article class="wcpait-grid-item"><span class="wcpait-grid-badge">1</span><h4><?php esc_html_e('Material', 'wc-pait'); ?></h4><p><?php esc_html_e('SPC', 'wc-pait'); ?></p></article>
+                        <article class="wcpait-grid-item"><span class="wcpait-grid-badge">2</span><h4><?php esc_html_e('Thickness', 'wc-pait'); ?></h4><p><?php esc_html_e('5 mm', 'wc-pait'); ?></p></article>
+                    </div>
+
+                    <ul class="wcpait-ribbon-list wcpait-preview-template" data-preview="ribbon_list" style="display:none;">
+                        <li class="wcpait-ribbon-item"><span class="wcpait-ribbon-badge">1</span><div><strong><?php esc_html_e('Material', 'wc-pait'); ?></strong><span><?php esc_html_e('SPC', 'wc-pait'); ?></span></div></li>
+                        <li class="wcpait-ribbon-item"><span class="wcpait-ribbon-badge">2</span><div><strong><?php esc_html_e('Thickness', 'wc-pait'); ?></strong><span><?php esc_html_e('5 mm', 'wc-pait'); ?></span></div></li>
+                    </ul>
                 </div>
             </div>
         </div>
