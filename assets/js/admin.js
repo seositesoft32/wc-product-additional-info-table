@@ -25,11 +25,45 @@
     }
 
     function activateTab(tab) {
-        $('.wcpait-tab').removeClass('is-active');
-        $('.wcpait-tab-panel').removeClass('is-active');
+        var $tabs = $('.wcpait-tab');
+        var $panels = $('.wcpait-tab-panel');
+        var $activeTab = $('.wcpait-tab[data-tab="' + tab + '"]');
+        var $activePanel = $('.wcpait-tab-panel[data-panel="' + tab + '"]');
 
-        $('.wcpait-tab[data-tab="' + tab + '"]').addClass('is-active');
-        $('.wcpait-tab-panel[data-panel="' + tab + '"]').addClass('is-active');
+        $tabs
+            .removeClass('is-active')
+            .attr('aria-selected', 'false')
+            .attr('tabindex', '-1');
+
+        $panels
+            .removeClass('is-active')
+            .attr('hidden', true);
+
+        $activeTab
+            .addClass('is-active')
+            .attr('aria-selected', 'true')
+            .attr('tabindex', '0')
+            .trigger('focus');
+
+        $activePanel
+            .addClass('is-active')
+            .attr('hidden', false);
+    }
+
+    function moveTabFocus(currentTab, direction) {
+        var $tabs = $('.wcpait-tab');
+        var currentIndex = $tabs.index(currentTab);
+        var nextIndex = currentIndex + direction;
+
+        if (nextIndex < 0) {
+            nextIndex = $tabs.length - 1;
+        }
+
+        if (nextIndex >= $tabs.length) {
+            nextIndex = 0;
+        }
+
+        $tabs.eq(nextIndex).trigger('click');
     }
 
     function sanitizeCssValue(value, fallback) {
@@ -167,6 +201,28 @@
     $(document).on('click', '.wcpait-tab', function (e) {
         e.preventDefault();
         activateTab($(this).data('tab'));
+    });
+
+    $(document).on('keydown', '.wcpait-tab', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            moveTabFocus(this, 1);
+        }
+
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            moveTabFocus(this, -1);
+        }
+
+        if (e.key === 'Home') {
+            e.preventDefault();
+            $('.wcpait-tab').first().trigger('click');
+        }
+
+        if (e.key === 'End') {
+            e.preventDefault();
+            $('.wcpait-tab').last().trigger('click');
+        }
     });
 
     $(document).on('submit', '#wcpait-settings-form', function (e) {

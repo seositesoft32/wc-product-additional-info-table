@@ -66,14 +66,29 @@ $preview_styles = sprintf(
         <?php settings_fields('wcpait_settings_group'); ?>
         <?php wp_nonce_field('wcpait_save_settings_nonce', 'wcpait_save_settings_nonce'); ?>
 
-        <div class="wcpait-settings-tabs" role="tablist" aria-label="<?php esc_attr_e('Settings tabs', 'wc-pait'); ?>">
-            <button type="button" class="button-link wcpait-tab is-active" data-tab="fields"><?php esc_html_e('Fields', 'wc-pait'); ?></button>
-            <button type="button" class="button-link wcpait-tab" data-tab="display"><?php esc_html_e('Display', 'wc-pait'); ?></button>
-            <button type="button" class="button-link wcpait-tab" data-tab="style"><?php esc_html_e('Style', 'wc-pait'); ?></button>
-            <button type="button" class="button-link wcpait-tab" data-tab="advanced"><?php esc_html_e('Advanced', 'wc-pait'); ?></button>
+        <div class="wcpait-settings-tabs-wrap">
+            <div class="wcpait-settings-tabs" role="tablist" aria-label="<?php esc_attr_e('Settings tabs', 'wc-pait'); ?>">
+                <button type="button" id="wcpait-tab-fields" class="button-link wcpait-tab is-active" data-tab="fields" role="tab" aria-selected="true" aria-controls="wcpait-panel-fields" tabindex="0">
+                    <span class="dashicons dashicons-feedback" aria-hidden="true"></span>
+                    <span><?php esc_html_e('Fields', 'wc-pait'); ?></span>
+                </button>
+                <button type="button" id="wcpait-tab-display" class="button-link wcpait-tab" data-tab="display" role="tab" aria-selected="false" aria-controls="wcpait-panel-display" tabindex="-1">
+                    <span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+                    <span><?php esc_html_e('Display', 'wc-pait'); ?></span>
+                </button>
+                <button type="button" id="wcpait-tab-style" class="button-link wcpait-tab" data-tab="style" role="tab" aria-selected="false" aria-controls="wcpait-panel-style" tabindex="-1">
+                    <span class="dashicons dashicons-art" aria-hidden="true"></span>
+                    <span><?php esc_html_e('Style', 'wc-pait'); ?></span>
+                </button>
+                <button type="button" id="wcpait-tab-advanced" class="button-link wcpait-tab" data-tab="advanced" role="tab" aria-selected="false" aria-controls="wcpait-panel-advanced" tabindex="-1">
+                    <span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
+                    <span><?php esc_html_e('Advanced', 'wc-pait'); ?></span>
+                </button>
+            </div>
+            <p class="description wcpait-tabs-help"><?php esc_html_e('Move between setup areas without leaving the page. Your changes stay in place until saved.', 'wc-pait'); ?></p>
         </div>
 
-        <div class="wcpait-tab-panel is-active" data-panel="fields">
+        <div class="wcpait-tab-panel is-active" id="wcpait-panel-fields" data-panel="fields" role="tabpanel" aria-labelledby="wcpait-tab-fields">
         <div class="wcpait-admin-card">
             <h2><?php esc_html_e('Additional Information Fields', 'wc-pait'); ?></h2>
             <p><?php esc_html_e('Drag to reorder fields. Label is required.', 'wc-pait'); ?></p>
@@ -117,7 +132,7 @@ $preview_styles = sprintf(
         </div>
         </div>
 
-        <div class="wcpait-tab-panel" data-panel="display">
+        <div class="wcpait-tab-panel" id="wcpait-panel-display" data-panel="display" role="tabpanel" aria-labelledby="wcpait-tab-display" hidden>
         <div class="wcpait-admin-grid">
             <div class="wcpait-admin-card">
                 <h2><?php esc_html_e('Display Positions', 'wc-pait'); ?></h2>
@@ -153,7 +168,7 @@ $preview_styles = sprintf(
         </div>
         </div>
 
-        <div class="wcpait-tab-panel" data-panel="style">
+        <div class="wcpait-tab-panel" id="wcpait-panel-style" data-panel="style" role="tabpanel" aria-labelledby="wcpait-tab-style" hidden>
         <div class="wcpait-admin-grid">
             <div class="wcpait-admin-card">
                 <h2><?php esc_html_e('Table Style Preset', 'wc-pait'); ?></h2>
@@ -279,7 +294,7 @@ $preview_styles = sprintf(
         </div>
         </div>
 
-        <div class="wcpait-tab-panel" data-panel="advanced">
+        <div class="wcpait-tab-panel" id="wcpait-panel-advanced" data-panel="advanced" role="tabpanel" aria-labelledby="wcpait-tab-advanced" hidden>
         <div class="wcpait-admin-card">
             <h2><?php esc_html_e('Advanced', 'wc-pait'); ?></h2>
             <label>
