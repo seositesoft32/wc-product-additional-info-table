@@ -4,6 +4,8 @@
  * @var string $style
  * @var string $wrapper_styles
  * @var bool $show_table_header
+ * @var string $header_label_text
+ * @var string $header_value_text
  */
 
 if (!defined('ABSPATH')) {
@@ -15,8 +17,8 @@ if (!defined('ABSPATH')) {
         <?php if ($show_table_header) : ?>
             <thead>
             <tr>
-                <th><?php esc_html_e('Label', 'wc-pait'); ?></th>
-                <th><?php esc_html_e('Value', 'wc-pait'); ?></th>
+                <th><?php echo esc_html($header_label_text); ?></th>
+                <th><?php echo esc_html($header_value_text); ?></th>
             </tr>
             </thead>
         <?php endif; ?>

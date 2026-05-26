@@ -20,6 +20,8 @@ class Sanitizer
             isset($input['display_position']) ? $input['display_position'] : (isset($input['display_positions']) ? $input['display_positions'] : $defaults['display_position'])
         );
         $settings['show_table_header'] = (!empty($input['show_table_header']) && 'yes' === $input['show_table_header']) ? 'yes' : 'no';
+        $settings['header_label_text'] = sanitize_text_field(isset($input['header_label_text']) ? $input['header_label_text'] : $defaults['header_label_text']);
+        $settings['header_value_text'] = sanitize_text_field(isset($input['header_value_text']) ? $input['header_value_text'] : $defaults['header_value_text']);
 
         $settings['table_style'] = self::allowed_string(
             isset($input['table_style']) ? $input['table_style'] : $defaults['table_style'],

@@ -74,6 +74,8 @@ class Renderer
         );
 
         $show_table_header = isset($settings['show_table_header']) && 'yes' === (string) $settings['show_table_header'];
+        $header_label_text = isset($settings['header_label_text']) ? (string) $settings['header_label_text'] : __('Label', 'wc-pait');
+        $header_value_text = isset($settings['header_value_text']) ? (string) $settings['header_value_text'] : __('Value', 'wc-pait');
 
         ob_start();
         include WCPAIT_PATH . 'templates/frontend/product-table.php';

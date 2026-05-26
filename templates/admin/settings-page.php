@@ -110,6 +110,14 @@ $selected_position = isset($settings['display_position']) ? (string) $settings['
                     <?php esc_html_e('Show table header (Label/Value) on frontend', 'wc-pait'); ?>
                 </label>
             </p>
+            <p>
+                <label for="wcpait_header_label_text"><?php esc_html_e('Header text: Label column', 'wc-pait'); ?></label><br />
+                <input type="text" id="wcpait_header_label_text" name="wcpait_settings[header_label_text]" value="<?php echo esc_attr(isset($settings['header_label_text']) ? (string) $settings['header_label_text'] : __('Label', 'wc-pait')); ?>" class="regular-text" />
+            </p>
+            <p>
+                <label for="wcpait_header_value_text"><?php esc_html_e('Header text: Value column', 'wc-pait'); ?></label><br />
+                <input type="text" id="wcpait_header_value_text" name="wcpait_settings[header_value_text]" value="<?php echo esc_attr(isset($settings['header_value_text']) ? (string) $settings['header_value_text'] : __('Value', 'wc-pait')); ?>" class="regular-text" />
+            </p>
             <label>
                 <input type="checkbox" name="wcpait_settings[cleanup_on_uninstall]" value="yes" <?php checked(isset($settings['cleanup_on_uninstall']) ? (string) $settings['cleanup_on_uninstall'] : 'no', 'yes'); ?> />
                 <?php esc_html_e('Delete plugin options and product values on uninstall', 'wc-pait'); ?>

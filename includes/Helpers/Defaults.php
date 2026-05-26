@@ -28,6 +28,8 @@ class Defaults
             ],
             'display_position' => 'after_add_to_cart',
             'show_table_header' => 'yes',
+            'header_label_text' => __('Label', 'wc-pait'),
+            'header_value_text' => __('Value', 'wc-pait'),
             'table_style' => 'minimal',
             'table_background' => '#ffffff',
             'header_background' => '#f3f4f6',
