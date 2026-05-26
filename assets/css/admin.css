@@ -54,3 +54,34 @@
     padding: 12px;
     background: #fff;
 }
+
+.wcpait-product-table-wrap {
+    padding: 10px 12px 12px;
+}
+
+.wcpait-product-values-table th,
+.wcpait-product-values-table td {
+    padding: 8px 10px;
+    vertical-align: middle;
+}
+
+.wcpait-product-values-table th {
+    font-weight: 600;
+    background: #f6f7f7;
+}
+
+.wcpait-product-values-table td:first-child {
+    min-width: 180px;
+}
+
+.wcpait-product-values-table td:nth-child(2),
+.wcpait-product-values-table td:nth-child(4) {
+    width: 110px;
+    color: #50575e;
+}
+
+.wcpait-product-values-table .wcpait-value-input {
+    width: 100%;
+    min-height: 32px;
+    margin: 0;
+}
