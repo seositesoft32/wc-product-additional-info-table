@@ -1,0 +1,56 @@
+.wcpait-admin-wrap {
+    max-width: 1220px;
+}
+
+.wcpait-admin-card {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 10px;
+    padding: 18px;
+    margin: 16px 0;
+}
+
+.wcpait-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+}
+
+.wcpait-fields-table td input,
+.wcpait-fields-table td select {
+    width: 100%;
+}
+
+.wcpait-sort-col {
+    width: 36px;
+    text-align: center;
+    cursor: move;
+}
+
+.wcpait-sort-col .dashicons {
+    color: #2271b1;
+}
+
+.wcpait-field-row.ui-sortable-helper {
+    background: #f6f7f7;
+}
+
+.wcpait-style-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.wcpait-style-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.wcpait-variation-group {
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 12px;
+    background: #fff;
+}
